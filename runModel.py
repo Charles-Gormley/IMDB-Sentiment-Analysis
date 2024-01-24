@@ -12,7 +12,7 @@ import argparse
 import logging
 
 parser = argparse.ArgumentParser(description='Process IMDB dataset and generate BERT embeddings.')
-parser.add_argument('--testing', action='store_true', default=True, help='Use a smaller subset of the dataset for testing purposes.')
+parser.add_argument('--testing', action='store_true', default=False, help='Use a smaller subset of the dataset for testing purposes.')
 args = parser.parse_args()
 testing = args.testing
 
@@ -101,11 +101,13 @@ confusion = confusion_matrix(test_labels, predicted_labels)
 results += 'Confusion Matrix:\n' + str(confusion) + '\n'
 
 # Writing results to a text file
-results_file_path = '/mnt/data/model_performance.txt'
+print("writing results")
+results_file_path = 'results/model_performance.txt'
 with open(results_file_path, 'w') as file:
     file.write(results)
 
 # Plotting the confusion matrix
+print("outputing matrix")
 plt.figure(figsize=(8, 6))
 sns.heatmap(confusion, annot=True, fmt='d', cmap='Blues', xticklabels=['Negative', 'Positive'], yticklabels=['Negative', 'Positive'])
 plt.title('Confusion Matrix')
@@ -113,7 +115,5 @@ plt.xlabel('Predicted Label')
 plt.ylabel('True Label')
 
 # Save the plot to a PNG file
-confusion_matrix_file_path = '/mnt/data/confusion_matrix.png'
+confusion_matrix_file_path = 'results/confusion_matrix.png'
 plt.savefig(confusion_matrix_file_path)
-
-results_file_path, confusion_matrix_file_path
